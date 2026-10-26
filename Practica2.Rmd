@@ -350,8 +350,50 @@ load("./data/weatherAUS_distributions.RData")
 str(ds)
 ```
 
+Defino un gráfico de boxplots en el que por cada año genero un boxplot de sus valores de MinTemp. Podemos observar como la mayoria de años tienen temperaturas parecidas, pero en el año 2016 se obervaron temperaturas mas elevadas, y una menor variación de temperatura. 
+```{r}
+grafica_aus <- ggplot(ds) + geom_boxplot(aes(x=Year, y=MinTemp))
+
+grafica_aus
+```
+
+
+Ahora genero un gráfico de violines con el color cambiante dependiendo del Año. Esto lo hacemos definiendo el fill como la variable Year.  En este gráfico también observamos lo mismo que en el anterior, que las temperaturas en el año 2016 fueron mayores. En este gráfico observamos la distribución de otra manera, más gráfica.
+```{r}
+grafica_aus <- ggplot(ds, aes(x = Year, y = MaxTemp, fill = Year)) +
+  geom_violin() +
+  labs(
+    title = "Distribución de temperaturas máximas por año",
+    x = "Año",
+    y = "Temperatura (ºC)",
+    fill = "Año"
+  )
+
+grafica_aus
+```
+Elimino la leyenda con legend.position = none y elijo donde poner los años con la variable axis.text.x. 
+```{r}
+grafica_aus <- ggplot(ds, aes(x = factor(Year), y = MaxTemp, fill = factor(Year))) +
+  geom_violin() +
+  labs(
+    title = "Distribución de temperaturas máximas por año",
+    x = "Año",
+    y = "Temperatura (ºC)"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+grafica_aus
+```
+
+Almaceno la gráfica en un pdf.
 
 ```{r}
-
+ggsave('./results/Ejercicio7.pdf', plot= grafica_aus)
 ```
+
+## Ejercicio 8
 
