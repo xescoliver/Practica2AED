@@ -208,7 +208,7 @@ Con geom_line añado una linea entre los valores de los puntos.
 grafico_ventas <- grafico_ventas + geom_line()
 grafico_ventas
 ```
-Ahora uso la función aes en geom_line para poder definir que el tipo de linea dependa de la variable Fabricante.  Podemos observar como Microsoft tiene mayores ventas que apple durante casi todos los años.
+Ahora uso la función aes en geom_line para poder definir que el tipo de linea dependa de la variable Fabricante.  Podemos observar como Microsoft tiene mayores ventas que apple durante casi todos los años. También observamos que en los año 2008 se presenta una bajada de las ventas para ambas marcas, representando la crísis económica.
 
 
 ```{r}
@@ -227,6 +227,64 @@ Finalmente guardamos la gráfica como pdf.
 
 ```{r}
 ggsave('./results/Ejercicio4.pdf', plot= grafico_ventas)
+
+```
+
+## Ejercicio 5.
+
+Empezamos cargando el dataset. VIsualizamos sus variables con nla función str. Vemos que tiene 4 variables distintas: Complemento, Dosis, Altura y Error_Altura.
+
+```{r}
+load("./data/Experimento.Rdata")
+
+str(Experimento)
+```
+
+Creo una nueva gráfica en la que observemos los valores de Dosis contra los de Altura. Además podemos observar por el tipo de línea y forma del punto el complemento que usan. Podemos observar como a mayor altura se usan mayores dosis. Además vemos como a alturas menores, el complemetno VC utiliza dosis más pequeñas que las del OJ, aunque con una altura mayor llegan a converger.
+
+```{r}
+grafica_experimento <- ggplot(Experimento, aes(x=Dosis, y=Altura, colour= Complemento)) + geom_point(aes(shape=Complemento)) + geom_line(aes(linetype=Complemento))
+
+grafica_experimento
+```
+
+Ahora creamos otro  gráfico para observar las barras de error. Podemos observar como el VC tiene menor dispersión en las alturas más pequeñas y mayor dispersión en mayor altura. En el complemento OJ encontramos el caso contrario.
+
+
+```{r}
+grafica_experimento <- grafica_experimento + geom_errorbar(aes(ymin=Altura - Error_Altura, ymax=Altura + Error_Altura), width=.1, position=position_dodge(0.05))
+
+grafica_experimento
+
+
+```
+
+
+
+
+Volvemos a generar la misma gráfica, pero ahora usamos el aes al llamar a cada función. De esta manera lo definimos concretamente para cada caso. Añadimos también  scale_color_brewer(palette = "Reds") para usar una paleta de rojos. Además añado el theme_classic para que se vea mejor los colores, que sino el rojo clarito no se diferenciaba. 
+
+```{r}
+
+grafica_experimento <- ggplot(Experimento, aes(x=Dosis, y=Altura, colour= Complemento)) +
+  geom_line(aes(linetype = Complemento)) +
+  geom_point(aes(shape = Complemento)) +
+  geom_errorbar(
+    aes(ymin = Altura - Error_Altura,
+        ymax = Altura + Error_Altura),
+    width = 0.1,
+    position = position_dodge(0.05)
+  ) +theme_classic() + scale_color_brewer(palette = "Reds")
+
+grafica_experimento
+
+```
+
+Almaceno el gráfico como pdf.
+
+```{r}
+ggsave('./results/Ejercicio5.pdf', plot= grafica_experimento)
+
 
 ```
 
