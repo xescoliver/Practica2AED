@@ -67,7 +67,7 @@ pacman::p_load(char=packages)
 
 ## Ejercicio 1.
 
-Cargamos los datos con load. Seguidamente creamos la base de la gráfica con ggplot, definiendo los datos y variables que usaremos.
+Cargamos los datos con load. Seguidamente creamos la base de la gráfica con ggplot, definiendo los datos y variables que usaremos. Vemos como hay una relación lineal. COn mayor temp mínima tambien hay mayor temperatura máxima.
 ```{r}
 weather_aus <- load("./data/weatherAUS.RData")
 
@@ -102,6 +102,8 @@ ggsave('./results/Ejercicio1.pdf', plot = grafico3)
 
 
 ## Ejercicio 2.
+
+Creamos unagráfica de dispersión. Observamos como a mayor temperatura, tenemos una menor presión. 
 
 ```{r}
 grafico4 <- ggplot(ds, aes(x=Temp9am, y=Pressure9am)) + geom_point()
@@ -173,6 +175,8 @@ Ahora realizamos la misma gráfica, pero dispuesta en columnas. Disponiendo los 
 iris.grafico2
 ```
 Redefinimos la gráfica para pasar a usar geom_jitter. Con esta funció, movemos aleatoriamente un poco los valores, permitiendonos ver mejor el eje y ( Value) , ya que nos evitamos que los puntos esten unos encima de otros, perdiendo información. De esta manera esmucho más visual la cantidad de puntos o insancias en cada valor.
+
+Podemos observar que las medidas de length son mayores que los de width, por lo que son mas largos que anchos. También observamos que los pétalos son menores que los sépalos. 
 
 ```{r}
 iris.grafico2 <- ggplot(iris.tidy, aes(x=Species, y= Value, colour=Part)) +  geom_jitter() + facet_grid(.~Measure )
@@ -285,6 +289,69 @@ Almaceno el gráfico como pdf.
 ```{r}
 ggsave('./results/Ejercicio5.pdf', plot= grafica_experimento)
 
+
+```
+
+## Ejercicio 6
+Empiezo cargando los datos y observando sus características y una descripción del dataset con ?tseries. Vemos como contiene datos sobre los rios de islancdia de un paper de Tong (1990). Observamos que tenemos 4 variables temporales (time series) flow.vat, flow.jok, prec, and temp, con 1095 casos y una joint series ice.river. Vemos que vat es el rio Vatnsdalsa y jok el jokulsa Eystri. EL flow o cauce es en cm, la precipitación en mm y las temperaturas en grados C. 
+
+```{r}
+
+load("./data/iceRiver.RData")
+
+?tseries::ice.river
+
+head(ice.river.df)
+```
+
+```{r}
+names(Experimento)
+ls()
+```
+
+Ahora represento los cauces de los rios. Observamos claramente como el rio Jokulsa tiene un cauce mucho mayor siempre, por lo que suponemos que es un rio mucho mayor. Se puede observar como a principios de cada año los cauces aumentan mucho, probablemente coincidiendo con la epoca de lluvias de la región. 
+
+```{r}
+grafica_rios <- ggplot(ice.river.df, aes(x = time)) +
+  geom_line(aes(y = flow.vat, color = "flow.vat")) +
+  geom_line(aes(y = flow.jok, color = "flow.jok")) +
+  scale_color_manual(
+    values = c("flow.vat" = "red", "flow.jok" = "blue"),
+    labels = c("flow.vat" = "Vatnsdalsa",
+               "flow.jok" = "Jokulsa Eystri")
+  ) +
+  labs(
+    title = "Caudal de los ríos de Islandia (1972-1974)",
+    x = "Días desde el 1 de enero de 1972",
+    y = "Caudal medio diario (m³/s)",
+    color = "Río"
+  ) +
+  theme_minimal()
+
+grafica_rios
+```
+
+Almacenamos la gráfica en un pdf. Con str visualizo sus variables, que son 24.
+
+```{r}
+ggsave('./results/Ejercicio6.pdf', plot= grafica_rios)
+```
+
+
+
+## Ejercicio 7
+
+Cargo el dataset, que se almacena en la variable ds.
+
+
+```{r}
+load("./data/weatherAUS_distributions.RData")
+
+str(ds)
+```
+
+
+```{r}
 
 ```
 
