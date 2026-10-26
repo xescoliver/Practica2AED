@@ -194,3 +194,39 @@ load("./data/Ejercicio4_Data.Rdata")
 str(DatosEjer4)
 ```
 
+Realizo un gráfico de dispersión con los valores del Dataset. No creo que este gráfico nos ayude a visualizar que los distintos valores estan en una serie temporal, unos detras de otros. Seria mejor usar otro tipo de gráfico.
+
+```{r}
+grafico_ventas <- ggplot(DatosEjer4, aes(x=Fecha, y=Ventas, colour=Fabricante)) + geom_point()
+grafico_ventas
+```
+
+Con geom_line añado una linea entre los valores de los puntos.
+
+
+```{r}
+grafico_ventas <- grafico_ventas + geom_line()
+grafico_ventas
+```
+Ahora uso la función aes en geom_line para poder definir que el tipo de linea dependa de la variable Fabricante.  Podemos observar como Microsoft tiene mayores ventas que apple durante casi todos los años.
+
+
+```{r}
+grafico_ventas <- ggplot(DatosEjer4, aes(x=Fecha, y=Ventas, colour=Fabricante)) + geom_point() +  geom_line(aes(linetype=Fabricante))
+grafico_ventas
+```
+
+Finalmente añadimos un título al gráfico.
+
+```{r}
+grafico_ventas <- grafico_ventas + ggtitle("Ventas de Microsoft vs Apple 2002-2010")
+grafico_ventas
+```
+
+Finalmente guardamos la gráfica como pdf.
+
+```{r}
+ggsave('./results/Ejercicio4.pdf', plot= grafico_ventas)
+
+```
+
