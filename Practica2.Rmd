@@ -135,4 +135,62 @@ ggsave('./results/Ejercicio2.pdf', plot=grafico4)
 ```
 
 
+## Ejercicio 3
+
+Cargo el conjunto de datos. Muestro sus variables con la función str. Observo los valores y sus tipos.
+
+```{r}
+load("./data/iris_tidy.Rdata" )
+
+str(iris.tidy)
+```
+
+Creo una nueva gráfica usando los valores de iris.tidy. COncretamente los valores de Species en el eje x y los de Value en el eje y. Como podemos ver, como species es una variable categórica al hacer un gráfico de dispersión se nos quedan los valores en 3 columnas. Para este caso creo que sería mejor usar un boxplot para visualizar sus dispersiones.
+
+```{r}
+iris.grafico1 <- ggplot(iris.tidy, aes(x=Species, y= Value))
+
+iris.grafico1 <- iris.grafico1 + geom_point()
+
+iris.grafico1
+```
+
+```{r}
+iris.grafico2 <- iris.grafico1 + aes(colour=Part)
+
+iris.grafico2
+```
+
+Ahora usamos la función facet_grid para crear dos gráficas, dispuestas en columnas, que dependan de la variable Measure. Hay una gráfica por cada valor de la variable Measure. 
+```{r}
+  iris.grafico2 + facet_grid(Measure~. )
+```
+
+Ahora realizamos la misma gráfica, pero dispuesta en columnas. Disponiendo los gráficos por columnas, uno al lado del otro, es más fácil comparar los valores entre las diferentes instancias. Esto se debe a que como lo que queremos comparar es los valores de Value en el eje Y, nos interesa poder tener los valores en el mismo eje. 
+
+```{r}
+ iris.grafico2 <- iris.grafico2 + facet_grid(.~Measure )
+iris.grafico2
+```
+Redefinimos la gráfica para pasar a usar geom_jitter. Con esta funció, movemos aleatoriamente un poco los valores, permitiendonos ver mejor el eje y ( Value) , ya que nos evitamos que los puntos esten unos encima de otros, perdiendo información. De esta manera esmucho más visual la cantidad de puntos o insancias en cada valor.
+
+```{r}
+iris.grafico2 <- ggplot(iris.tidy, aes(x=Species, y= Value, colour=Part)) +  geom_jitter() + facet_grid(.~Measure )
+
+iris.grafico2
+```
+Almaceno este gráfico en pdf.
+
+```{r}
+ggsave('./results/Ejercicio3.pdf', plot= iris.grafico2)
+```
+
+## Ejercicio 4.
+
+Cargo los nuevos datos y visualizo con str sus variables. Observo que tiene 3: Fecha, Fabricane y Ventas, y sus correspodientes tipos.
+```{r}
+load("./data/Ejercicio4_Data.Rdata")
+
+str(DatosEjer4)
+```
 
