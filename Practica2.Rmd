@@ -57,5 +57,82 @@ editor_options:
 En este documento se va a realizar la práctica 2 de Análisis
 exploratorio de datos. Esta práctica se centra en realizar gráficos con ggplot.
 
+Empezamos cargando los paquetes que necesitaremos durante la práctica.
+```{r}
+library(pacman)
+packages =  c("tidyverse", "knitr", "ggplot2", "datasets", "RColorBrewer",'latex2exp')
+pacman::p_load(char=packages)
+
+```
+
+## Ejercicio 1.
+
+Cargamos los datos con load. Seguidamente creamos la base de la gráfica con ggplot, definiendo los datos y variables que usaremos.
+```{r}
+weather_aus <- load("./data/weatherAUS.RData")
+
+grafico1 <- ggplot(ds, aes(x=MinTemp, y=MaxTemp))
+
+grafico1 + geom_point()
+
+```
+
+Vuelvo a crear la gráfica, pero uso ahora en el aes la variable colour, para definir respecto a que variable definimos los colores. En este caso será RainTOmorrow.
+
+```{r}
+grafico2 <- ggplot(ds, aes(x=MinTemp, y=MaxTemp, colour=RainTomorrow)) + geom_point()
+grafico2
+
+```
+Añado un título a la gráfica con la función ggtitle.
+```{r}
+grafico3 <- grafico2 + ggtitle("Lluvia el dia siguiente dependiendo de la mínima y máxima temperatura")
+
+grafico3
+```
+
+Creo el directorio results para poder almacenar los resultados. Seguidamente guardamoms la gráfica dentro de la nueva carpeta.
+```{r}
+
+dir.create("./results")
+
+ggsave('./results/Ejercicio1.pdf', plot = grafico3)
+```
+
+
+
+## Ejercicio 2.
+
+```{r}
+grafico4 <- ggplot(ds, aes(x=Temp9am, y=Pressure9am)) + geom_point()
+grafico4
+```
+Con la variable shape definimos con que atributo definimos los diferentes tipos de punto. En este caso usamos RainTOday.
+```{r}
+grafico4 <- ggplot(ds, aes(x=Temp9am, y=Pressure9am, shape=RainToday)) + geom_point()
+grafico4
+```
+
+Ahora representamos si llueve hoy con el color, en vez de con la forma. De esta manera se visualiza de manera mucho más clara a que categoria corresponde cada punto. Usando las formas se dificulta este proceso, sobretodo al solaparse unos puntos con otros.
+
+```{r}
+grafico4 <- ggplot(ds, aes(x=Temp9am, y=Pressure9am, colour=RainToday)) + geom_point()
+grafico4
+```
+Añado a la gráfica elementos estéticos como el título, subtítulo, los nombres de las variables o el nombre de la variable que define el color. Así se entiende mejor el gráfico.
+```{r}
+grafico4 + labs(title = "LLuvia el dia de hoy",
+       subtitle = "Relación con la temperatura y presión a las 9am",
+       x = "Temperatura 9am",
+       y = "Presión 9am",
+       colour='LLuvia el dia de hoy')
+```
+
+Finalmente almacena el gŕafico en pdf.
+
+```{r}
+ggsave('./results/Ejercicio2.pdf', plot=grafico4)
+```
+
 
 
