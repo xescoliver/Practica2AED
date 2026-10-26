@@ -1,0 +1,61 @@
+---
+title: "Práctica 2 AED"
+author: "Francesc Oliver Catany"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  html_document:
+    echo: true
+    number_sections: true
+    theme: lumen
+    toc: true
+  html_notebook:
+    echo: true
+    number_sections: true
+    toc: true
+  bookdown::pdf_document2:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    figure_caption: "Figura" # Referencias en castellano
+    table_caption: "Tabla"
+  bookdown::html_document2:
+    echo: true
+    number_sections: true
+    theme: spacelab
+    toc: true
+    figure_caption: "Figura"
+    table_caption: "Tabla"
+always_allow_html: true
+lang: es-ES
+subtitle: "Introducción a la Ciencia de Datos. Máster en Ciencia de Datos- UV"
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    def: 'Definición '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostración. '
+    remark: 'Nota: '
+    solution: 'Solución. '
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Introducción
+
+En este documento se va a realizar la práctica 2 de Análisis
+exploratorio de datos. Esta práctica se centra en realizar gráficos con ggplot.
+
+
+
